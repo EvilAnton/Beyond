@@ -1,4 +1,4 @@
-package com.beyond.view;
+package com.beyond.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,11 +10,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.beyond.Assets;
 import com.beyond.Constants;
 import com.beyond.MyGame;
 
-public class Menu implements Constants, Screen{
+public class MenuScreen implements Screen, Constants{
 	MyGame game;
+	Stage stage;
 	
 	// Rendering options
 	OrthographicCamera camera;
@@ -32,25 +37,18 @@ public class Menu implements Constants, Screen{
     Sound dropSound;
     Music rainMusic;
 
-    public Menu (MyGame game) {
+    public MenuScreen (MyGame game) {
         // —сылка на главный класс
     	this.game = game;
     	
     	Gdx.app.log (MyGame.LOG, "Main menu created");  
-    	
-    	camera = new OrthographicCamera();
-    	batch = new SpriteBatch();
+
     	
     	backgroundIMG = new Texture (Gdx.files.internal ("images/background.png"));
     	girlIMG = new Texture (Gdx.files.internal ("images/girl.png"));   	
     	playIMG = new Texture (Gdx.files.internal ("images/play_button.png"));
     	exitIMG = new Texture (Gdx.files.internal ("images/exit_button.png"));
     	optionsIMG = new Texture (Gdx.files.internal ("images/options_button.png"));
-    	
-    	optionBtn = new Actor ();
-    	optionBtn.setBounds(150, 240, 200, 75);
-    	optionBtn.setColor(Color.GREEN);
-    	optionBtn.setVisible(true);
     	
     	Gdx.app.log (MyGame.LOG, "Images loaded");
 
@@ -63,25 +61,11 @@ public class Menu implements Constants, Screen{
 	@Override
 	public void render(float delta) {
     	// Ёто чистит экран и заполн€ет синим цветом
-    	Gdx.gl.glClearColor (0, 0, 0.2f, 1);
-    	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+    	Gdx.gl.glClearColor (0, 0, 0, 1);
+    	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);    	  	
     	
-    	camera.update();
-    	
-    	batch.setProjectionMatrix(camera.combined);
-    	
-    	batch.begin();
-    	//batch.draw (backgroundIMG,  0, 0);
-    	//batch.draw (playIMG, 0, 0);
-    	//batch.draw (exitIMG, 0, 0);
-    	//batch.draw (optionsIMG, 0, 0);
-    	//batch.draw (girlIMG, 0, 0);   
-    	optionBtn.draw(batch, 1);
-    	batch.end();    	
-    	
-    	if (Gdx.input.justTouched()) {
-    		Gdx.app.log(MyGame.LOG, "Screen was touched at " + Gdx.input.getX() + "/" + Gdx.input.getY());
-    	}
+    	stage.act(delta);
+    	stage.draw();
 	}
 
 	@Override
@@ -92,13 +76,21 @@ public class Menu implements Constants, Screen{
 	@Override
 	public void show() {
 		Gdx.app.log( MyGame.LOG, "Show menu screen" );
-
-    	camera.setToOrtho (false, 800, 480);
-
-
-    	//rainMusic.play();
-    	Gdx.app.log (MyGame.LOG, "Menu created");
+		stage = new Stage ();
+		
+		// ”станавливаем фон
+		Image background = new Image (Assets.menuBackground);
+		Image girlBack = new Image (Assets.girlInMenu);
+		Image options_title = new Image (Assets.menuButtons);
+		// Ёффект дл€ по€влени€ фона
+		stage.addAction(Actions.sequence(Actions.fadeOut (0.001f), Actions.fadeIn( 0.5f )));
+		
+		stage.addActor(background);
+		stage.addActor(girlBack);
+		stage.addActor(options_title);
 	}
+	
+	
 
 	@Override
 	public void hide() {

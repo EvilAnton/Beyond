@@ -12,33 +12,14 @@ public class MyGame extends Game  {
 	 
 	    // a libgdx helper class that logs the current FPS each second
 	    private FPSLogger fpsLogger;
-
-	    Screen menuSettingScreen;
-	    Screen mainMenuScreen;
-	    Screen splashScreen;
-
-	    public Screen getSplashScreen () {
-	    	return splashScreen;
-	    }
-	    
-	    public Screen getMainMenuScreen () {
-	    	return mainMenuScreen;
-	    }
-	    
-	    public Screen getMenuSettingScreen () {
-	    	return menuSettingScreen;
-	    }
 	    
     	@Override
 		public void create () {
             Gdx.app.log( MyGame.LOG, "Creating game" );
             fpsLogger = new FPSLogger();
             
-            splashScreen = new com.beyond.view.SplashScreen (this);            
-            mainMenuScreen = new com.beyond.view.Menu (this);
-            menuSettingScreen = new com.beyond.view.MenuSettingScreen(this);
-            
-            setScreen (getSplashScreen());
+            Assets.load();
+            setScreen (new com.beyond.screens.SplashScreen(this));
         }
 
         @Override 
