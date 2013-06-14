@@ -1,4 +1,4 @@
-package model;
+package com.beyond.model;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

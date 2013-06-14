@@ -1,14 +1,15 @@
-package view;
+package com.beyond.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.beyond.Constants;
 import com.beyond.MyGame;
 
@@ -25,6 +26,8 @@ public class Menu implements Constants, Screen{
 	Texture playIMG;
 	Texture exitIMG;
 	Texture optionsIMG;
+	
+	Actor optionBtn;
 
     Sound dropSound;
     Music rainMusic;
@@ -40,9 +43,14 @@ public class Menu implements Constants, Screen{
     	
     	backgroundIMG = new Texture (Gdx.files.internal ("images/background.png"));
     	girlIMG = new Texture (Gdx.files.internal ("images/girl.png"));   	
-    	playIMG = new Texture (Gdx.files.internal ("images/play.png"));
-    	exitIMG = new Texture (Gdx.files.internal ("images/exit.png"));
-    	optionsIMG = new Texture (Gdx.files.internal ("images/options.png"));
+    	playIMG = new Texture (Gdx.files.internal ("images/play_button.png"));
+    	exitIMG = new Texture (Gdx.files.internal ("images/exit_button.png"));
+    	optionsIMG = new Texture (Gdx.files.internal ("images/options_button.png"));
+    	
+    	optionBtn = new Actor ();
+    	optionBtn.setBounds(150, 240, 200, 75);
+    	optionBtn.setColor(Color.GREEN);
+    	optionBtn.setVisible(true);
     	
     	Gdx.app.log (MyGame.LOG, "Images loaded");
 
@@ -63,11 +71,12 @@ public class Menu implements Constants, Screen{
     	batch.setProjectionMatrix(camera.combined);
     	
     	batch.begin();
-    	batch.draw (backgroundIMG,  0, 0);
-    	batch.draw (playIMG, 0, 0);
-    	batch.draw (exitIMG, 0, 0);
-    	batch.draw (optionsIMG, 0, 0);
-    	batch.draw (girlIMG, 0, 0);    	
+    	//batch.draw (backgroundIMG,  0, 0);
+    	//batch.draw (playIMG, 0, 0);
+    	//batch.draw (exitIMG, 0, 0);
+    	//batch.draw (optionsIMG, 0, 0);
+    	//batch.draw (girlIMG, 0, 0);   
+    	optionBtn.draw(batch, 1);
     	batch.end();    	
     	
     	if (Gdx.input.justTouched()) {
@@ -87,7 +96,7 @@ public class Menu implements Constants, Screen{
     	camera.setToOrtho (false, 800, 480);
 
 
-    	rainMusic.play();
+    	//rainMusic.play();
     	Gdx.app.log (MyGame.LOG, "Menu created");
 	}
 

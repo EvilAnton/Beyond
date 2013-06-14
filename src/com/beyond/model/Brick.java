@@ -1,4 +1,4 @@
-package model;
+package com.beyond.model;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
